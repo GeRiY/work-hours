@@ -1,0 +1,17 @@
+{
+  "appId": "com.nuxtskeleton.app",
+  "appName": "nuxt-skeleton",
+  "webDir": "dist",
+  "npmClient": "npm",
+  "bundledWebRuntime": false,
+  "plugins": {
+    "SplashScreen": {
+      "launchShowDuration": 0
+    }
+  },
+  "cordova": {},
+  "server": {
+    "url": "http://192.168.0.102:3000",
+    "cleartext": true
+  }
+}
