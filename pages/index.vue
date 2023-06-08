@@ -15,7 +15,7 @@
           <div class="summary-item">
             <div class="summary-item__title">Összes óra</div>
 <!--            user hour format-->
-            <div class="summary-item__value">{{ sumHourCount.toLocaleString('hu-HU') }} óra</div>
+            <div class="summary-item__value">{{ sumHourCount.toLocaleString('hu-HU') }} <v-icon>mdi-clock-time-eight-outline</v-icon></div>
           </div>
           <div style="width: 20%">
             <v-select
@@ -49,15 +49,18 @@
             <div class="summary-item__value">
               Kifizetve:
               {{ sumFullPriceByIsPaid.toLocaleString('hu-HU') }}
-              Ft /
-              {{ sumFullPrice.toLocaleString('hu-HU') }} Ft összesen
+              <v-icon>mdi-cash-100</v-icon> /
+              {{ sumFullPrice.toLocaleString('hu-HU') }}
+              <v-icon>mdi-cash-100</v-icon>
+              összesen
             </div>
           </div>
           <div class="summary-item">
             <!-- user money format, show sumFullPriceByIsPaid with it -->
             <div class="summary-item__value">
               Maradék fizetendő:
-              {{ parseInt(sumFullPrice-sumFullPriceByIsPaid).toLocaleString('hu-HU') }} Ft
+              {{ parseInt(sumFullPrice-sumFullPriceByIsPaid).toLocaleString('hu-HU') }}
+              <v-icon>mdi-cash-100</v-icon>
             </div>
           </div>
         </div>
@@ -67,14 +70,20 @@
                            :key="cardIndex"
                            :style="{ backgroundColor: card.isPaid ? '#c8e6c9' : '#ffcdd2',color: 'black' }"
         >
-          <v-expansion-panel-header><b>{{ card.workType }}</b>({{ formatDate(card.createdAt, ' dddd') }})</v-expansion-panel-header>
+          <v-expansion-panel-header>
+              <span>
+                <b>{{ card.workType }}</b>
+                <v-icon color="black">mdi-calendar-month</v-icon>
+                {{ formatDate(card.createdAt, ' dddd') }}
+              </span>
+          </v-expansion-panel-header>
           <v-expansion-panel-content>
-            <ul>
-              <li><b>Órák száma:</b> {{ card.hourCount ? parseInt(card.hourCount).toLocaleString('hu-HU') : 0 }}</li>
-              <li><b>Órabér:</b> {{ card.hourlyPrice ? parseInt(card.hourlyPrice).toLocaleString('hu-HU') : 0 }} Ft</li>
-              <li><b>Teljes összeg:</b> {{ parseInt(card.fullPrice).toLocaleString('hu-HU') }} Ft</li>
-              <li><b>Kifizetve:</b> {{ card.isPaid ? 'Igen' : 'Nem' }}</li>
-              <li>{{ formatDate(card.createdAt, ' dddd') }}</li>
+            <ul style="list-style: none">
+              <li><v-icon color="black">mdi-clock-time-two-outline</v-icon><b>Órák száma:</b> {{ card.hourCount ? parseInt(card.hourCount).toLocaleString('hu-HU') : 0 }}</li>
+              <li><v-icon color="black">mdi-timetable</v-icon><b>Órabér:</b> {{ card.hourlyPrice ? parseInt(card.hourlyPrice).toLocaleString('hu-HU') : 0 }} Ft</li>
+              <li><v-icon color="black">mdi-cash-100</v-icon><b>Teljes összeg:</b> {{ parseInt(card.fullPrice).toLocaleString('hu-HU') }} Ft</li>
+              <li><v-icon color="black">mdi-cash-clock</v-icon><b>Kifizetve:</b> {{ card.isPaid ? 'Igen' : 'Nem' }}</li>
+              <li><v-icon color="black">mdi-calendar-month</v-icon>{{ formatDate(card.createdAt, ' dddd') }}</li>
             </ul>
             <div class="actions">
               <v-btn color="error" dark @click="removeWorkHour(card.id)">Törlés</v-btn>
