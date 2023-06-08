@@ -175,14 +175,24 @@ export default {
       return months;
     },
     filteredWorkHours(){
-      if (this.selectedMount === '') return this.workHours;
+      if (this.selectedMount === '') return this.workHours.sort((a,b) => {
+        if (a.createdAt > b.createdAt) {
+          return -1;
+        } else {
+          return 1;
+        }
+      });
       let workHours = this.workHours.filter((item) => {
         const month = moment(item.createdAt.trim(),'YYYY-MM-DD HH:mm:ss').locale('hu').format('YYYY-MM');
         return month === this.selectedMount;
       })
       workHours = Array.isArray(workHours) ? workHours : [workHours];
       return workHours.sort((a,b) => {
-        return moment(a.createdAt.trim(),'YYYY-MM-DD HH:mm:ss').locale('hu').format('YYYY-MM-DD HH:mm:ss') - moment(b.createdAt.trim(),'YYYY-MM-DD HH:mm:ss').locale('hu').format('YYYY-MM-DD HH:mm:ss')
+        if (a.createdAt > b.createdAt) {
+          return -1;
+        } else {
+          return 1;
+        }
       });
     },
   },
