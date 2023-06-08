@@ -83,7 +83,7 @@
               <li><v-icon color="black">mdi-timetable</v-icon><b>Órabér:</b> {{ card.hourlyPrice ? parseInt(card.hourlyPrice).toLocaleString('hu-HU') : 0 }} Ft</li>
               <li><v-icon color="black">mdi-cash-100</v-icon><b>Teljes összeg:</b> {{ parseInt(card.fullPrice).toLocaleString('hu-HU') }} Ft</li>
               <li><v-icon color="black">mdi-cash-clock</v-icon><b>Kifizetve:</b> {{ card.isPaid ? 'Igen' : 'Nem' }}</li>
-              <li><v-icon color="black">mdi-calendar-month</v-icon>{{ formatDate(card.createdAt, ' dddd') }}</li>
+              <li><v-icon color="black">mdi-calendar-month</v-icon>{{ formatDate(card.createdAt, ' dddd HH:mm:ss') }}</li>
             </ul>
             <div class="actions">
               <v-btn color="error" dark @click="removeWorkHour(card.id)">Törlés</v-btn>
@@ -176,11 +176,14 @@ export default {
     },
     filteredWorkHours(){
       if (this.selectedMount === '') return this.workHours;
-      const workHours = this.workHours.filter((item) => {
+      let workHours = this.workHours.filter((item) => {
         const month = moment(item.createdAt.trim(),'YYYY-MM-DD HH:mm:ss').locale('hu').format('YYYY-MM');
         return month === this.selectedMount;
       })
-      return Array.isArray(workHours) ? workHours : [workHours];
+      workHours = Array.isArray(workHours) ? workHours : [workHours];
+      return workHours.sort((a,b) => {
+        return moment(a.createdAt.trim(),'YYYY-MM-DD HH:mm:ss').locale('hu').format('YYYY-MM-DD HH:mm:ss') - moment(b.createdAt.trim(),'YYYY-MM-DD HH:mm:ss').locale('hu').format('YYYY-MM-DD HH:mm:ss')
+      });
     },
   },
   watch: {},
